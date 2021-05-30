@@ -62,14 +62,15 @@ public class ProductController {
 		//Business Logic
 		productService.addProduct(product);
 		
-		return "redirect:/product/addProduct.jsp";
+		return "forward:/product/addProduct.jsp";
 	}
 	
 	//@RequestMapping("/getUser.do")
-	@RequestMapping( value="getProduct", method=RequestMethod.GET )
-	public String getProduct( @RequestParam("prodNo") int prodNo , @RequestParam(value = "menu" , defaultValue = "search") String menu , Model model ) throws Exception {
+	@RequestMapping( value= "getProduct")
+	public String getProduct( @RequestParam("prodNo") int prodNo , 
+			@RequestParam(value = "menu" , defaultValue = "search") String menu , Model model ) throws Exception {
 		
-		System.out.println("/user/getUser : GET");
+		System.out.println("/getProduct.do");
 		//Business Logic
 		Product prod = productService.getProduct(prodNo);
 		// Model 과 View 연결
@@ -91,8 +92,6 @@ public class ProductController {
 		return "forward:/product/updateProductView.jsp";
 	}
 	
-	//@RequestMapping("/updateUserView.do")
-	//public String updateUserView( @RequestParam("userId") String userId , Model model ) throws Exception{
 	@RequestMapping( value="updateProduct", method=RequestMethod.POST )
 	public String updateProduct( @ModelAttribute("product") Product product) throws Exception{
 
@@ -100,12 +99,11 @@ public class ProductController {
 		// Model 과 View 연결
 		productService.updateProduct(product);
 		
-		return "redirect:/product/getProduct?prodNo=" + product.getProdNo() + "&menu=manage";
+		return "forward:/product/getProduct?prodNo=" + product.getProdNo() + "&menu=manage";
 	}
 	
 	
 
-	//@RequestMapping("/listUser.do")
 	@RequestMapping( value="listProduct" )
 	public String listProduct( @ModelAttribute("search") Search search , @RequestParam(value = "menu" , defaultValue = "search") String menu , Model model , HttpServletRequest request) throws Exception{
 		

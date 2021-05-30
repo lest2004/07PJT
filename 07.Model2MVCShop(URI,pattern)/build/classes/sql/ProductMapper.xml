@@ -19,17 +19,15 @@
 	
 	<!-- SQL : INSERT -->
 	<insert 	id="addProduct"		parameterType="product" >
-	 	INSERT
-		INTO product(
-		prod_no ,
-		prod_name ,
-		prod_detail ,
-		manufacture_day ,
-		price,
-		image_file,
-		reg_date) 
-		VALUES	 (	SEQ_PRODUCT_PROD_NO.NEXTVAL , #{prodName} , #{prodDetail} , #{manuDate} , #{price} , 
-							#{fileName} , SYSDATE )
+	 INSERT
+		INTO product
+		VALUES ( seq_product_prod_no.nextval , 
+				#{prodName} , 
+				#{prodDetail} ,
+				REPLACE(#{manuDate}, '-', '') ,
+				#{price} ,
+				#{fileName} ,
+				sysdate )
 	 </insert>
 	 
 	 <!-- SQL : SELECT ONE -->
@@ -43,21 +41,21 @@
 		image_file ,
 		reg_date 
 		FROM product 
-		WHERE prod_no IN (#{prodNo})
+		WHERE prod_no = (#{prodNo})
 	 </select>
 	 
 	 <!-- SQL : UPDATE -->
 	 	<update	id="updateProduct"	parameterType="product" >
 	   	UPDATE product
 	   	<set>
-	   		prod_name 			= #{prodName} ,
-			prod_detail			= #{prodDetail},
-			manufacture_day 	= #{manuDate} ,
-			price				= #{price} ,
-			image_file			= #{fileName}
+	   		prod_name = #{prodName} ,
+			prod_detail = #{prodDetail},
+			manufacture_day = #{manuDate} ,
+			price = #{price} ,
+			image_file = #{fileName}
 			
 	   	</set>
-	   	WHERE prod_no in (#{prodNo})
+	   	WHERE prod_no = (#{prodNo})
 	 </update>
 		 
 
@@ -70,10 +68,10 @@
 											<if test="searchCondition != null">
 												<where>
 													<if test="searchCondition == 0 and searchKeyword !='' ">
-										 				prod_no like '%#{searchKeyword}%'
+										 				prod_no like '%${searchKeyword}%'
 													</if>
 													<if test="searchCondition == 1 and searchKeyword !='' ">
-										 				prod_name like '%#{searchKeyword}%'
+										 				prod_name like '%${searchKeyword}%'
 													</if>
 												</where>
 											</if>
