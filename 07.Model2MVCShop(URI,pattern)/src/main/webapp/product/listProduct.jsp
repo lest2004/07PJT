@@ -1,26 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%--    
-    <%@ page import="java.util.List"  %>
-    
-    <%@ page import="com.model2.mvc.service.domain.Product" %>
-	<%@ page import="com.model2.mvc.common.Search" %>
-	<%@ page import="com.model2.mvc.common.Page" %>
-	<%@ page import="com.model2.mvc.common.util.CommonUtil" %>
 
-<%
-	List<Product> list=(List<Product>)request.getAttribute("list");
-	Page resultPage=(Page)request.getAttribute("resultPage");
-	String menu = (String)request.getParameter("menu");
-	Search search = (Search)request.getAttribute("search");
-	
-	String searchCondition = CommonUtil.null2str(search.getSearchCondition());
-	String searchKeyword = CommonUtil.null2str(search.getSearchKeyword());
-
-	
-%>
- --%>   
     
 <html>
 <head>
@@ -54,10 +35,10 @@ function fncGetProductList(currentPage){
 			<table width="100%" border="0" cellspacing="0" cellpadding="0">
 				<tr>
 					<td width="93%" class="ct_ttl01">
-					<c:if test="${menu == 'manage'}">
+					<c:if test="${menu.equals('manage')}">
 					상품목록조회
 					</c:if>
-					<c:if test="${menu == 'search'}">
+					<c:if test="${menu.equals('search')}">
 					상품검색
 					</c:if>
 					</td>
@@ -129,47 +110,7 @@ function fncGetProductList(currentPage){
 	<tr>
 		<td colspan="11" bgcolor="808285" height="1"></td>
 	</tr>
-	<%--
-	<% 	
-		for(int i=0; i<list.size(); i++) {
-			Product vo = list.get(i);
-	%>
-		
-	<tr class="ct_list_pop">
-		<td align="center"><%= i + 1 %></td>
-		<td></td>
-				<%
-				if(menu.equals("manage")){
-				%>
-				<td align="left">
-				<a href="/getProduct.do?prodNo=<%=vo.getProdNo()%>&menu=<%=menu%>"><%=vo.getProdName() %></a>
-				</td>
-				<%
-				}else if(menu.equals("search")){
-				%>
-				<td align="left">
-				<a href="/getProduct.do?prodNo=<%=vo.getProdNo()%>&menu=<%=menu%>"><%=vo.getProdName() %></a>
-				</td>
-				<%
-				}
-				%>
-		
-		<td></td>
-		<td align="left"><%=vo.getPrice() %></td>
-		<td></td>
-		<td align="left"><%=vo.getRegDate() %></td>
-		<td></td>
-			
-		
-	</tr>
 	
-	<tr>
-		<td colspan="11" bgcolor="D6D7D6" height="1"></td>
-	</tr>
-	<%
-	}
-	%>	
-	--%>
 	
 	<c:set var="i" value="0" />
 	<c:forEach var="product" items="${list}">
@@ -194,22 +135,7 @@ function fncGetProductList(currentPage){
 	<tr>
 		<td align="center">
 		<input type="hidden" id="currentPage" name="currentPage" value=""/>
-			<%--<% if( resultPage.getCurrentPage() <= resultPage.getPageUnit() ){
-					◀ 이전
-			<% }else{ %>
-					<a href="javascript:fncGetProductList('<%=resultPage.getCurrentPage()-1%>')">◀ 이전</a>
-			<% } %>
-
-			<%	for(int i=resultPage.getBeginUnitPage();i<= resultPage.getEndUnitPage() ;i++){	%>
-					<a href="javascript:fncGetProductList('<%=i %>');"><%=i %></a>
-			<% 	}  %>
-	
-			<% if( resultPage.getEndUnitPage() >= resultPage.getMaxPage() ){ %>
-					이후 ▶
-			<% }else{ %>
-					<a href="javascript:fncGetProductList('<%=resultPage.getEndUnitPage()+1%>')">이후 ▶</a>
-			<% } %>
-			--%>
+		
 			<jsp:include page="../common/pageNavigator.jsp"/>
 		
     	</td>
